@@ -4,7 +4,7 @@ import hashlib
 
 
 def get_hash(filename):
-    blockchain_dir = os.curdir + '/blockchain/'
+    blockchain_dir = f'{os.curdir}/blockchain/'
     file = open(blockchain_dir + filename, 'rb').read()
 
     return hashlib.md5(file).hexdigest()
@@ -15,7 +15,7 @@ def check_integrity():
     # 2.Вычислить хэш предыдущего блока
     # 3.Сравнить полученные данные
 
-    blockchain_dir = os.curdir + '/blockchain/'
+    blockchain_dir = f'{os.curdir}/blockchain/'
     files = os.listdir(blockchain_dir)
     files = sorted([int(i) for i in files])
 
@@ -24,17 +24,13 @@ def check_integrity():
         prev_file = str(file - 1)
         actual_hash = get_hash(prev_file)
 
-        if h == actual_hash:
-            res = 'Ok'
-        else:
-            res = 'Corrupted'
-
-        print('block {} is: {}'.format(prev_file, res))
+        res = 'Ok' if h == actual_hash else 'Corrupted'
+        print(f'block {prev_file} is: {res}')
 
 
 
 def write_block(name, amount, to_whom, prev_hash=''):  # входные параметры
-    blockchain_dir = os.curdir + '/blockchain/'
+    blockchain_dir = f'{os.curdir}/blockchain/'
 
     files = os.listdir(blockchain_dir)  # получение файлов папки
     files = sorted([int(i) for i in files])
